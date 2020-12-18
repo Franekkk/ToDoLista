@@ -2,6 +2,7 @@ let $todoInput;
 let $alertInfo;
 let $addBtn;
 let $ulList;
+let $newTask;
 const main = () => {
     prepreDOMElements()
     prepareDOMEvents()
@@ -15,29 +16,70 @@ const prepreDOMElements = () => {
     console.log('jakies Text')
 }
 const prepareDOMEvents = () => {
-
+    $addBtn.addEventListener('click', addNewTask)
 }
-const createTooIsArea = () => {
-    const toolsPanel = document.createElement('div')
-    toolsPanel.classList.add('tools')
-    $newTask.appendChild(toolsPanel)
 
-    const completeBtn = document.createElement('button ')
-    completeBtn.classList.add('complete')
+const addNewTask = () => {
+    if ($todoInput.value !== '') {
+        $newTask = document.createElement('li')
+        $newTask.innerText = $todoInput.value
+        $ulList.appendChild($newTask)
 
-    const editBtn = document.createElement('button')
-    editBtn.classList.add('edit')
-    editBtn.innerText = 'EDIT'
+        $todoInput.innerText = ""
+        $alertInfo.innerText = ""
 
-    const deleteBtn = document.createElement('button')
-    deleteBtn.classList.add('delete')
-    deleteBtn.innerHTML = '<i class="fas fa-times"></i>'
+    } else {
+        $alertInfo.innerText = 'Wpisz treść zadania'
+    }
 
-    toolsPanel.appendChild(completeBtn)
-    toolsPanel.appendChild(editBtn)
-    toolsPanel.appendChild(deleteBtn)
 
 
 }
 
 document.addEventListener('DOMContentLoaded', main)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const createTooIsArea = () => {
+//     const toolsPanel = document.createElement('div')
+//     toolsPanel.classList.add('tools')
+//     $newTask.appendChild(toolsPanel)
+
+//     const completeBtn = document.createElement('button ')
+//     completeBtn.classList.add('complete')
+
+//     const editBtn = document.createElement('button')
+//     editBtn.classList.add('edit')
+//     editBtn.innerText = 'EDIT'
+
+//     const deleteBtn = document.createElement('button')
+//     deleteBtn.classList.add('delete')
+//     deleteBtn.innerHTML = '<i class="fas fa-times"></i>'
+
+//     toolsPanel.appendChild(completeBtn)
+//     toolsPanel.appendChild(editBtn)
+//     toolsPanel.appendChild(deleteBtn)
+
+
+// }
