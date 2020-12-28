@@ -3,6 +3,15 @@ let $alertInfo;
 let $addBtn;
 let $ulList;
 let $newTask;
+
+let $popup
+let $popupInfo
+let $editedToDo
+let $popupInput
+let $addPopupBtn
+let $closeToDoBtn
+
+
 const main = () => {
     prepreDOMElements()
     prepareDOMEvents()
@@ -14,10 +23,18 @@ const prepreDOMElements = () => {
     $ulList = document.querySelector('.todoList ul')
     console.log($todoInput, $alertInfo, $addBtn, $ulList)
     console.log('jakies Text')
+
+    $popup = document.querySelector('.popup')
+    $popupInfo = document.querySelector('.popupInfo')
+    $popupInput = document.querySelector('.popupInput')
+    $addPopupBtn = document.querySelector('.accept')
+    $closeToDoBtn = document.querySelector('.cancel')
+
 }
 const prepareDOMEvents = () => {
     $addBtn.addEventListener('click', addNewTask)
     $ulList.addEventListener('click', checkClick)
+    $closeToDoBtn.addEventListener('click', closePopup)
 }
 
 const addNewTask = () => {
@@ -62,14 +79,20 @@ const checkClick = (e) => {
         e.target.closest('button').classList.toggle('completed')
     } else if (e.target.closest('button').className === 'edit') {
         console.log('edit')
+        editTask();
     } else if (e.target.closest('button').className === 'delete') {
         console.log('delete')
     }
 
 
 };
+const editTask = () => {
+    $popup.style.display = 'flex'
+};
+const closePopup = () => {
+    $popup.style.display = 'none'
 
-
+};
 
 document.addEventListener('DOMContentLoaded', main);
 
