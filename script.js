@@ -10,7 +10,7 @@ let $editedToDo
 let $popupInput
 let $addPopupBtn
 let $closeToDoBtn
-
+let $idNumber = 0
 
 const main = () => {
     prepreDOMElements()
@@ -35,14 +35,16 @@ const prepareDOMEvents = () => {
     $addBtn.addEventListener('click', addNewTask)
     $ulList.addEventListener('click', checkClick)
     $closeToDoBtn.addEventListener('click', closePopup)
+    $addPopupBtn.addEventListener('click', changeToDo)
 }
 
 const addNewTask = () => {
     if ($todoInput.value !== '') {
+        $idNumber++;
         $newTask = document.createElement('li')
         $newTask.innerText = $todoInput.value
         $ulList.appendChild($newTask)
-
+        $newTask.setAttribute('id', `todo-${$idNumber}`)
         $todoInput.innerText = ""
         $alertInfo.innerText = ""
 
@@ -79,16 +81,29 @@ const checkClick = (e) => {
         e.target.closest('button').classList.toggle('completed')
     } else if (e.target.closest('button').className === 'edit') {
         console.log('edit')
-        editTask();
+        editTask(e);
     } else if (e.target.closest('button').className === 'delete') {
         console.log('delete')
     }
 
 
 };
-const editTask = () => {
+const editTask = (e) => {
+    const oldToDo = e.target.closest('li').id
+    $editedToDo = document.getElementById(oldToDo)
+    $popupInput.value = $editedToDo.firstChild.textContent
+
     $popup.style.display = 'flex'
 };
+const changeToDo = () => {
+    if ($popupInput.value !== ``) {
+        $editedToDo.firstChild.textContent = $popupInput.value
+        $popup.style.display = 'none'
+        $popup.innerText = ""
+    } else {
+        $popupInfo.innerText = "musisz podac treść"
+    }
+}
 const closePopup = () => {
     $popup.style.display = 'none'
 
