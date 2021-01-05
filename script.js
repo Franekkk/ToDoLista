@@ -11,6 +11,7 @@ let $popupInput
 let $addPopupBtn
 let $closeToDoBtn
 let $idNumber = 0
+let $allTasks
 
 const main = () => {
     prepreDOMElements()
@@ -29,13 +30,15 @@ const prepreDOMElements = () => {
     $popupInput = document.querySelector('.popupInput')
     $addPopupBtn = document.querySelector('.accept')
     $closeToDoBtn = document.querySelector('.cancel')
-
+    $allTasks = document.getElementsByTagName('li')
 }
 const prepareDOMEvents = () => {
     $addBtn.addEventListener('click', addNewTask)
     $ulList.addEventListener('click', checkClick)
     $closeToDoBtn.addEventListener('click', closePopup)
     $addPopupBtn.addEventListener('click', changeToDo)
+    $todoInput.addEventListener('keyup', enterCheck)
+
 }
 
 const addNewTask = () => {
@@ -55,6 +58,13 @@ const addNewTask = () => {
 
 
 }
+
+const enterCheck = () => {
+    if (event.keycode === 13) {
+        addNewTask()
+    }
+}
+
 
 const createTooIsArea = () => {
     const toolsPanel = document.createElement('div')
@@ -84,6 +94,7 @@ const checkClick = (e) => {
         editTask(e);
     } else if (e.target.closest('button').className === 'delete') {
         console.log('delete')
+        { deleteTask(e) }
     }
 
 
@@ -108,6 +119,14 @@ const closePopup = () => {
     $popup.style.display = 'none'
 
 };
+const deleteTask = (e) => {
+    const deleteToDo = e.target.closest(' li')
+    deleteToDo.remove()
+
+    if ($allTasks.length === 0) {
+        $alertInfo.innerText = ' Brak zadań na liscie'
+    }
+}
 
 document.addEventListener('DOMContentLoaded', main);
 
